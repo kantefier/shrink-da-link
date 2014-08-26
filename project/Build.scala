@@ -6,7 +6,8 @@ object ApplicationBuild extends Build {
 	val appVersion	= "0.0.1"
 
 	val appDependencies = Seq(
-		"org.squeryl" % "squeryl_2.11" % "0.9.5-7"
+		"org.squeryl" % "squeryl_2.11" 					% "0.9.5-7",
+		"mysql" 			% "mysql-connector-java" 	% "5.1.31"
 	)
 
 	val main = Project(appName, file(".")).enablePlugins(play.PlayScala).settings(
