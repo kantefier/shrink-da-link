@@ -1,0 +1,10 @@
+.centered {
+	margin: auto;
+	width: 60%;
+}
+
+.big-header {
+	height: 240px;
+	width: 820px;
+	margin: auto;
+}
