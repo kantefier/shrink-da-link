@@ -17,15 +17,18 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src='@routes.Assets.at("javascripts/bootstrap.js")' ></script>
+
+    <script src='@routes.Assets.at("javascripts/shrinker.js")' ></script>
   </head>
 
   <body>
   	<div class="big-header"><img src='@routes.Assets.at("images/da_logo.png")' align="middle"></div>
   	<div class="centered">
 			<input type="text" class="form-control" id="my-url-input" placeholder="Paste URL here">
-			<div style="margin: auto; padding-top: 5px; width: 200px">
-				<button type="button" class="btn btn-primary btn-lg" style="width: 100%">Shrink it!</button>
+			<div style="margin: auto; padding-top: 5px; padding-bottom: 5px; width: 200px">
+				<button type="button" id="actionButton" class="btn btn-primary btn-lg" style="width: 100%">Shrink it!</button>
 			</div>
+      <p class="form-control-static" id="my-url-output" style="text-align: center"></p>
 		</div>
   </body>
 </html>
