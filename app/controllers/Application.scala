@@ -27,6 +27,7 @@ object Application extends Controller {
   }
 
   def makeShortUrl(originalUrl: String): String = {
+  	//TODO: calculate checksum of link, check presence of such record in DB, add or update to DB
   	adler32sum(originalUrl).toHexString
   }
 
