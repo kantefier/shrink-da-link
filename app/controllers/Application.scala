@@ -3,7 +3,9 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.libs.json._
-import java.security.MessageDigest
+import org.squeryl.PrimitiveTypeMode._
+
+import models._
 
 object Application extends Controller {
 
@@ -28,7 +30,11 @@ object Application extends Controller {
 
   def makeShortUrl(originalUrl: String): String = {
   	//TODO: calculate checksum of link, check presence of such record in DB, add or update to DB
-  	adler32sum(originalUrl).toHexString
+  	val shortUrl = adler32sum(originalUrl).toHexString
+  	transaction {
+			AppDB.linkMapTable insert (new LinkMap(originalUrl, shortUrl))
+		}
+		shortUrl
   }
 
 	def adler32sum(s: String): Int = {
