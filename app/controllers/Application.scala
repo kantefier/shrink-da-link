@@ -18,7 +18,7 @@ object Application extends Controller {
   			Logger.debug("request json valid")
   			//do something, take hash and so on
   			//obtain result and send it back
-  			Ok( Json.toJson( Map("shortUrl" -> Json.toJson(md5(originalUrl).toString)) ) )
+  			Ok( Json.toJson( Map("shortUrl" -> Json.toJson(makeShortUrl(originalUrl))) ) )
   		},
   		invalid = { errors =>
   			BadRequest
@@ -26,9 +26,22 @@ object Application extends Controller {
 		)
   }
 
-  def md5(s: String) = {
-    MessageDigest.getInstance("MD5").digest(s.getBytes)
-	}
+  def makeShortUrl(originalUrl: String): String = {
+  	adler32sum(originalUrl).toHexString
+  }
+
+	def adler32sum(s: String): Int = {
+		val MOD_ADLER = 65521
+
+    var a = 1
+    var b = 0
+    s.getBytes().foreach(char => {
+      a = (char + a) % MOD_ADLER
+      b = (b + a) % MOD_ADLER
+    })
+    // note: Int is 32 bits, which this requires
+    return b * 65536 + a     // or (b << 16) + a
+  }
 
   val reqShrinkUrl: Reads[String] = (JsPath \ "originalUrl").read[String]
 }
