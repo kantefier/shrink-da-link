@@ -10,7 +10,7 @@ $(function () {
 			contentType: 'application/json; charset=UTF-8',
 			dataType: 'json',
 			processData: 'false',
-			timeout: 2500,
+			timeout: 1000,
 			data: '{ "originalUrl": ' + JSON.stringify(urlinput.val()) + ' }'
 		}).done(function (data) {
 			urloutput.text(data.shortUrl);
