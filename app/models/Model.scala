@@ -8,18 +8,20 @@ import org.squeryl.annotations.Column
  * Defining the Schema
  */
 object AppDB extends Schema {
-	val linkMapTable = table[LinkMap]("linkmap")
+    val linkMapTable = table[LinkMap]("LinkMap")
 
-	on(linkMapTable) { lt => declare {
-		lt.id is autoIncremented
-	}}
+    on(linkMapTable) { lt =>
+        declare {
+            lt.id is autoIncremented
+        }
+    }
 }
 
 /**
  * Holds the data about original URL and shortened one
  */
 case class LinkMap(id: Long,
-									@Column("originallink")
-							originalURL: String,
-									@Column("shortlink")
-							shortURL: String) extends KeyedEntity[Long]
+                   @Column("originallink")
+                   originalURL: String,
+                   @Column("shortlink")
+                   shortURL: String) extends KeyedEntity[Long]

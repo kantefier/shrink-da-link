@@ -10,6 +10,6 @@ libraryDependencies ++= Seq(
 	jdbc,
 	cache,
 	ws,
-	"org.squeryl" % "squeryl_2.11" 					% "0.9.5-7",
-	"mysql" 			% "mysql-connector-java" 	% "5.1.31"
+	"org.squeryl"	% "squeryl_2.11"			% "0.9.5-7",
+	"mysql" 		% "mysql-connector-java" 	% "5.1.31"
 )
