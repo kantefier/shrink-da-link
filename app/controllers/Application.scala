@@ -23,7 +23,7 @@ object Application extends Controller {
                 Ok(
                     Json.toJson(
                         Map("shortUrl" ->
-                          Json.toJson(s"http://${request.host}/${makeShortUrl(mkPrefixedUrl(originalUrl))}")
+                          Json.toJson(s"http://${request.host}/${(makeShortUrl _ compose mkPrefixedUrl).apply(originalUrl)}")
                         )
                     )
                 )
