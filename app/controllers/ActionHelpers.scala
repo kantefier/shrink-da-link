@@ -2,6 +2,7 @@ package controllers
 
 import models.{LinkMap, AppDB}
 import org.squeryl.PrimitiveTypeMode._
+import scala.annotation.tailrec
 
 /**
  * Controller's backstage
@@ -25,6 +26,20 @@ object ActionHelpers {
     }
 
     /**
+     *  Tail-recursive func that generates short Urls until they're distinct
+     */
+    @tailrec
+    def generateCheckedShortUrl(originalUrl: String): String = {
+        val shortUrl = (adler32sum(originalUrl) + System.nanoTime).toHexString
+        from(AppDB.linkMapTable) {item =>
+            where(item.shortURL === shortUrl) select item
+        }.headOption match {
+            case Some(found) => generateCheckedShortUrl(originalUrl)
+            case None => shortUrl
+        }
+    }
+
+    /**
      * Returns hash of original URL
      * If not found in DB, inserts new row
      */
@@ -35,7 +50,7 @@ object ActionHelpers {
             case Some(mappingFound) =>
                 mappingFound.shortURL
             case None =>
-                val shortUrl = adler32sum(originalUrl).toHexString
+                val shortUrl = generateCheckedShortUrl(originalUrl)
                 AppDB.linkMapTable insert LinkMap(0, originalUrl, shortUrl)
                 shortUrl
         }
